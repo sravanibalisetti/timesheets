@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -34,27 +34,43 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 
-function Menu() {
+function Menu({
+    selectedWeek,
+    setSelectedWeek,
+    getFirstDayOfWeek,
+    getSecondDayOfWeek,
+    getThirdDayOfWeek,
+    getFourthDayOfWeek,
+    getFifthDayOfWeek,
+    getSixthDayOfWeek,
+    getLastDayOfWeek,
+    handleWeekChange,
+    val,
+    setVal,
+    values,
+    setValues,
+    handleChange,
+    handleSubmit,
+    items,
+    setItems
+}) {
 
-    const [selectedWeek, setSelectedWeek] = useState(new Date());
     const nav = useNavigate()
+    const handletimesheet =()=>{
+        nav('/Main')
+    }
+    const [clear, setClear] = useState(" ")
+    const [row, setRow] = useState(" ")
+    const [week, setWeek] = useState()
 
-    const getFirstDayOfWeek = () => {
-        const firstDay = selectedWeek.getDate() - selectedWeek.getDay();
-        return new Date(selectedWeek.setDate(firstDay));
-    };
+    useEffect(() => {
+        const week = JSON.parse(localStorage.getItem('items'));
+        if (week) {
+            setWeek(week);
+        }
+        // console.log(week);
+    }, []);
 
-    const getLastDayOfWeek = () => {
-        const lastDay = selectedWeek.getDate() - selectedWeek.getDay() + 6;
-        return new Date(selectedWeek.setDate(lastDay));
-    };
-
-    const handleWeekChange = (event) => {
-        const [year, week] = event.target.value.split('-W');
-        const selectedDate = new Date(year, 0, (week - 1) * 7 + 1);
-        setSelectedWeek(selectedDate);
-        
-    };
 
     const getWeekNumber = (date) => {
         const oneJan = new Date(date.getFullYear(), 0, 1);
@@ -76,6 +92,10 @@ function Menu() {
     const handleClose = () => {
         setOpen(false);
     };
+    const clearfrom = () =>{
+
+
+    }
 
 
     const backbutton = () => {
@@ -186,8 +206,9 @@ function Menu() {
     };
 
     const handletimesheetadd = () => {
-        nav('/Main')
+        nav('Main')
     }
+
 
     return (
         <div>
@@ -210,14 +231,15 @@ function Menu() {
                                 If you wish to change date, click here
 
                             </span>
-                            <input type="week" value={`${selectedWeek.getFullYear()}-W${getWeekNumber(selectedWeek)}`} onChange={handleWeekChange} />
+                            <input type="week" style={{ width: "6%" }} value={`${selectedWeek.getFullYear()}-W${getWeekNumber(selectedWeek)}`} onChange={handleWeekChange} />
                             <br />
                             <Button variant="contained" style={{ backgroundColor: "#1dbb99" }} onClick={handletimesheetadd}>Proceed</Button>
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>
+
             </div>
-            <Card sx={{ minWidth: 275 }}>
+            <Card sx={{ minWidth: 275}}>
                 <Box
                     style={{ marginLeft: "0%" }}
                     component="form"
@@ -228,7 +250,7 @@ function Menu() {
                     <div style={{ marginLeft: "3%" }}>
                         <Grid container spacing={0}>
                             <Grid xs={6} md={8}>
-                                <div>
+                                <div >
                                     <TextField
                                         id="year"
                                         select
@@ -272,7 +294,7 @@ function Menu() {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField
+                                    <TextField style={{left:"740px",bottom:"73px"}}
                                         id="status"
                                         select
                                         label="STATUS"
@@ -327,111 +349,46 @@ function Menu() {
             </Card>
             <br />
             <br />
-            <Table striped bordered hover style={{ marginLeft: "5%", width: "90%" }}>
-                <thead style={{ textAlign: "center" }}>
-                    <tr>
+<div>
+    <button  style={{position:"absolute",right:"20px",top:"155px",backgroundColor:"#00aae7" }} onClick={clearfrom}>clear</button>
+</div>
+            <div>
+                <TableContainer >
+                    <Table style={{ left: "09px" ,top:"07px"}} sx={{ minWidth: 150 }} aria-label="simple table" >
+                        <TableHead>
+                            <TableRow style={{backgroundColor:"#00aae7"}}>
+                                <TableCell>START DATE</TableCell>
+                                <TableCell align="center">END DATE</TableCell>
+                                <TableCell align="center">HOURS</TableCell>
+                                <TableCell align="center">SUBMITED DATE</TableCell>
+                                <TableCell align="center">STATUS</TableCell>
+                                <TableCell align="center">APPROVED DATE</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {week?.map((row) => (
+                                <TableRow
+                                    key={row.hours}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {row.startdate}
+                                    </TableCell>
+                                    <TableCell align="center">{row.lastdate}</TableCell>
+                                    <TableCell align="center">{row.hours}</TableCell>
+                                    <TableCell align="center">06/19/2023</TableCell>
+                                    <TableCell align="center">
+                                        <Button variant="contained" style={{ backgroundColor: "#00aae7" }} onClick={handletimesheet}>submitted</Button>
+                                    </TableCell>
+                                    <TableCell align="center">N/A</TableCell>
+                                  
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
 
-                        <th>START DATE</th>
-                        <th>END DATE</th>
-                        <th>HOURS</th>
-                        <th>SUBMITTED DATE</th>
-                        <th>STATUS</th>
-                        <th>APPROVED DATE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>May 28,2023</td>
-                        <td>Jun 3,2023</td>
-                        <td>40</td>
-                        <td>Jun2,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>May 21,2023</td>
-                        <td>Jun 27,2023</td>
-                        <td>40</td>
-                        <td>Jun30,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>May 14,2023</td>
-                        <td>Jun 20,2023</td>
-                        <td>40</td>
-                        <td>Jun30,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>May 7,2023</td>
-                        <td>Jun 13,2023</td>
-                        <td>40</td>
-                        <td>Jun16,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Apr 30,2023</td>
-                        <td>Jun 6,2023</td>
-                        <td>40</td>
-                        <td>Jun8,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-
-                    <tr>
-                        <td>Apr 23,2023</td>
-                        <td>Apr 29,2023</td>
-                        <td>40</td>
-                        <td>Apr28,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Apr 16,2023</td>
-                        <td>Apr 22,2023</td>
-                        <td>40</td>
-                        <td>Apr24,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Apr 9,2023</td>
-                        <td>Apr 15,2023</td>
-                        <td>40</td>
-                        <td>Apr14,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Apr 2,2023</td>
-                        <td>Apr 8,2023</td>
-                        <td>40</td>
-                        <td>Apr 6,2023</td>
-                        <td><button style={{ backgroundColor: "#00aae7", color: "white" }} onClick={backbutton}>Submitted</button></td>
-                        <td>N/A</td>
-                    </tr>
-
-
-                </tbody>
-            </Table>
-            {/* </CardContent>
-                </Card> */}
-
-            {/* </div> */}
-
-
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DateRangeCalendar', 'DateRangeCalendar']}>
-        <DemoItem label="1 calendar">
-          <DateRangeCalendar calendars={1} />
-        </DemoItem>
-      </DemoContainer>
-    </LocalizationProvider> */}
-
-        </div>
+        </div>  
     )
 
 
