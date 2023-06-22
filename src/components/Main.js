@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
 function Main({
+    
     getFirstDayOfWeek,
     getSecondDayOfWeek,
     getThirdDayOfWeek,
@@ -25,8 +26,8 @@ function Main({
     setValues,
     handleChange,
     handleSubmit
-}) {
 
+}) {
 
     const nav = useNavigate()
     const backbutton = () => {
@@ -68,11 +69,10 @@ function Main({
                     </CardContent>
                 </Card>
             </div>
-
             <div style={{ marginTop: "3%" }}>
                 <Card style={{ width: "100%" }}>
-                    <CardContent  >
-                        <div >
+                    <CardContent >
+                        <div>
                             <button
                                 style={{ backgroundColor: "#00aae7" }}
                                 onClick={backbutton}><ArrowBackIcon /></button>
@@ -107,7 +107,7 @@ function Main({
                                     >
                                         <td style={{ fontWeight: "bold" }}>
                                             Total(Hrs)</td>
-                                        <td >
+                                        <td>
                                             <input style={{ width: "160px" }}
                                                 type="text"
                                                 name="value1"
@@ -169,10 +169,11 @@ function Main({
                             </Table>
                         </div>
                         <br />
-
                         <div style={{ textAlign: "right" }}>
                             <Button variant="contained" style={{ backgroundColor: "#00aae7" }}
                                 onClick={handleSubmit} >
+
+
                                 submit
                             </Button>
                         </div>
@@ -183,8 +184,14 @@ function Main({
 
     )
 }
-
 export default Main
+
+
+
+
+
+
+
 
 
 

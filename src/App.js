@@ -10,6 +10,7 @@ const App = () => {
 
   const nav = useNavigate()
   const [selectedWeek, setSelectedWeek] = useState(new Date());
+  const [total,setTotal]=useState()
 
   const getFirstDayOfWeek = () => {
     const firstDay = selectedWeek.getDate() - selectedWeek.getDay();
@@ -62,17 +63,17 @@ const App = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+    setValues((Values) => ({ ...Values, [name]: value }));
     const regex = /^[0-9\b]+$/;
     if (e.target.value === "" || regex.test(e.target.value)) {
       setVal(e.target.value);
     }
 
   };
-
   const handleSubmit = (event) => {
-    nav('Main')
     event.preventDefault();
+    nav('/Main')
+
     const { value1, value2, value3, value4, value5, value6, value7 } = values;
     const sum =
       parseInt(value1) +
@@ -91,6 +92,7 @@ const App = () => {
       value6: '',
       value7: '',
     })
+    setTotal(sum);
     setValues((prevValues) => ({ ...prevValues, sum: sum.toString() }));
     // setValues(values.sum)
     // console.log(sum);
@@ -98,7 +100,7 @@ const App = () => {
 
     setItems({ "hours": sum,"startdate":getFirstDayOfWeek().toLocaleDateString(), 
      "lastdate":getLastDayOfWeek().toLocaleDateString() })
-
+    
 
     let a = localStorage.getItem("items");
     if (a == null) {
@@ -107,9 +109,11 @@ const App = () => {
     let b = JSON.parse(a);
     b.push(items);
     localStorage.setItem("items", JSON.stringify(b))
-
-  
   };
+  useEffect(()=>{
+    // setItems({ "hours": total,"startdate":getFirstDayOfWeek().toLocaleDateString(), 
+    // "lastdate":getLastDayOfWeek().toLocaleDateString() })
+  },[items,total])
 
   return (
     <>
@@ -123,7 +127,7 @@ const App = () => {
           getFourthDayOfWeek={getFourthDayOfWeek}
           getFifthDayOfWeek={getFifthDayOfWeek}
           getSixthDayOfWeek={getSixthDayOfWeek}
-         getLastDayOfWeek={getLastDayOfWeek}
+          getLastDayOfWeek={getLastDayOfWeek}
           handleWeekChange={handleWeekChange}
           val={val}
           setVal={setVal}
@@ -133,6 +137,7 @@ const App = () => {
           handleSubmit={handleSubmit}
           items={items}
           setItems={setItems}
+    
         />} />
 
         <Route path='Main' element={<Main
@@ -155,12 +160,14 @@ const App = () => {
 
         />} />
       </Routes>
-
-
-
     </>
   )
 
 }
 
 export default App
+
+
+
+
+

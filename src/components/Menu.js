@@ -56,7 +56,7 @@ function Menu({
 }) {
 
     const nav = useNavigate()
-    const handletimesheet =()=>{
+    const handletimesheet = () => {
         nav('/Main')
     }
     const [clear, setClear] = useState(" ")
@@ -92,9 +92,9 @@ function Menu({
     const handleClose = () => {
         setOpen(false);
     };
-    const clearfrom = () =>{
-
-
+    const clearfrom = () => {
+        setWeek([])
+        localStorage.clear();
     }
 
 
@@ -208,7 +208,18 @@ function Menu({
     const handletimesheetadd = () => {
         nav('Main')
     }
-
+    const [currentDate, setCurrentDate] = useState('');
+  
+    useEffect(() => {
+          const date = new Date();
+          const options = {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+          }
+          setCurrentDate(date.toLocaleString('GB-en', options));
+        
+    });
 
     return (
         <div>
@@ -239,7 +250,7 @@ function Menu({
                 </Dialog>
 
             </div>
-            <Card sx={{ minWidth: 275}}>
+            <Card sx={{ minWidth: 275 }}>
                 <Box
                     style={{ marginLeft: "0%" }}
                     component="form"
@@ -294,7 +305,7 @@ function Menu({
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField style={{left:"740px",bottom:"73px"}}
+                                    <TextField
                                         id="status"
                                         select
                                         label="STATUS"
@@ -349,14 +360,14 @@ function Menu({
             </Card>
             <br />
             <br />
-<div>
-    <button  style={{position:"absolute",right:"20px",top:"155px",backgroundColor:"#00aae7" }} onClick={clearfrom}>clear</button>
-</div>
+            <div>
+                <button style={{ position: "absolute", right: "20px", top: "90px", backgroundColor: "#00aae7" }} onClick={clearfrom}>clear</button>
+            </div>
             <div>
                 <TableContainer >
-                    <Table style={{ left: "09px" ,top:"07px"}} sx={{ minWidth: 150 }} aria-label="simple table" >
+                    <Table style={{ left: "09px", top: "07px" }} sx={{ minWidth: 150 }} aria-label="simple table" >
                         <TableHead>
-                            <TableRow style={{backgroundColor:"#00aae7"}}>
+                            <TableRow style={{ backgroundColor: "#00aae7" }}>
                                 <TableCell>START DATE</TableCell>
                                 <TableCell align="center">END DATE</TableCell>
                                 <TableCell align="center">HOURS</TableCell>
@@ -375,12 +386,12 @@ function Menu({
                                     </TableCell>
                                     <TableCell align="center">{row.lastdate}</TableCell>
                                     <TableCell align="center">{row.hours}</TableCell>
-                                    <TableCell align="center">06/19/2023</TableCell>
+                                    <TableCell align="center"> {currentDate}</TableCell>
                                     <TableCell align="center">
                                         <Button variant="contained" style={{ backgroundColor: "#00aae7" }} onClick={handletimesheet}>submitted</Button>
                                     </TableCell>
                                     <TableCell align="center">N/A</TableCell>
-                                  
+
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -388,7 +399,7 @@ function Menu({
                 </TableContainer>
             </div>
 
-        </div>  
+        </div>
     )
 
 
