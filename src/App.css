@@ -7,18 +7,23 @@
   align-items: center;
   background-color: #f0ffff;
 }
-table {
-  border: 2px solid rgb(7, 8, 7);
-  width: 1400px;
-  height: 500px;
-  position: relative;
-  top: 100px;
-  right: 50px;
+@media screen and (min-width: 400px) {
+  table {
+    border: 2px solid rgb(7, 8, 7);
+    width: 1400px;
+    height: 500px;
+    position: relative;
+    top: 100px;
+    right: 50px;
+  }
 }
-tab{
-  height: 200px;
-  width: 300px;
+@media screen and (min-width: 800px) {
+  tab{
+    height: 200px;
+    width: 300px;
+  }
 }
+
 table1 {
   border: 2px solid yellow;
   position: relative;

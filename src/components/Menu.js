@@ -92,6 +92,7 @@ function Menu({
     const handleClose = () => {
         setOpen(false);
     };
+
     const clearfrom = () => {
         setWeek([])
         localStorage.clear();
@@ -101,12 +102,14 @@ function Menu({
     const backbutton = () => {
         nav('/Main')
     }
+
     const [selectedYear, setSelectedYear] = useState(null);
     const data = [2021, 2022, 2023, 2024];
     const handleYearChange = (event) => {
         const selectedYear = event.target.value;
         setSelectedYear(selectedYear);
     };
+
     const data1 = [
         {
             value: 'month',
@@ -209,16 +212,16 @@ function Menu({
         nav('Main')
     }
     const [currentDate, setCurrentDate] = useState('');
-  
+
     useEffect(() => {
-          const date = new Date();
-          const options = {
+        const date = new Date();
+        const options = {
             month: '2-digit',
             day: '2-digit',
             year: 'numeric',
-          }
-          setCurrentDate(date.toLocaleString('GB-en', options));
-        
+        }
+        setCurrentDate(date.toLocaleString('GB-en', options));
+
     });
 
     return (
@@ -261,7 +264,8 @@ function Menu({
                     <div style={{ marginLeft: "3%" }}>
                         <Grid container spacing={0}>
                             <Grid xs={6} md={8}>
-                                <div >
+                                <div>
+
                                     <TextField
                                         id="year"
                                         select
@@ -274,8 +278,8 @@ function Menu({
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                    <TextField
 
+                                    <TextField
                                         id="month"
                                         select
                                         label="MONTH"
@@ -292,6 +296,7 @@ function Menu({
                                             </option>
                                         ))}
                                     </TextField>
+
                                     <TextField
                                         id="week"
                                         select
@@ -305,6 +310,7 @@ function Menu({
                                             </MenuItem>
                                         ))}
                                     </TextField>
+
                                     <TextField
                                         id="status"
                                         select
@@ -322,6 +328,7 @@ function Menu({
                                         ))}
                                     </TextField>
                                 </div>
+
                             </Grid>
                             <Grid xs={6} md={2}>
                                 <div >
@@ -381,14 +388,12 @@ function Menu({
                                 <TableRow
                                     key={row.hours}
                                 >
-                                    <TableCell component="th" scope="row">
-                                        {row.startdate}
-                                    </TableCell>
+                                    <TableCell component="th" scope="row">{row.startdate} </TableCell>
                                     <TableCell align="center">{row.lastdate}</TableCell>
                                     <TableCell align="center">{row.hours}</TableCell>
                                     <TableCell align="center"> {currentDate}</TableCell>
                                     <TableCell align="center">
-                                        <Button variant="contained" style={{ backgroundColor: "#00aae7" }} onClick={handletimesheet}>submitted</Button>
+                                    <Button variant="contained" style={{ backgroundColor: "#00aae7" }} onClick={handletimesheet}>submitted</Button>
                                     </TableCell>
                                     <TableCell align="center">N/A</TableCell>
 

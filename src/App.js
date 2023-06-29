@@ -10,28 +10,33 @@ const App = () => {
 
   const nav = useNavigate()
   const [selectedWeek, setSelectedWeek] = useState(new Date());
-  const [total,setTotal]=useState()
+  const [total, setTotal] = useState()
 
   const getFirstDayOfWeek = () => {
     const firstDay = selectedWeek.getDate() - selectedWeek.getDay();
     return new Date(selectedWeek.setDate(firstDay));
   };
+
   const getSecondDayOfWeek = () => {
     const secondDay = selectedWeek.getDate() - selectedWeek.getDay() + 1;
     return new Date(selectedWeek.setDate(secondDay));
   };
+
   const getThirdDayOfWeek = () => {
     const thirddDay = selectedWeek.getDate() - selectedWeek.getDay() + 2;
     return new Date(selectedWeek.setDate(thirddDay));
   };
+
   const getFourthDayOfWeek = () => {
     const fourthDay = selectedWeek.getDate() - selectedWeek.getDay() + 3;
     return new Date(selectedWeek.setDate(fourthDay));
   };
+
   const getFifthDayOfWeek = () => {
     const fifthDay = selectedWeek.getDate() - selectedWeek.getDay() + 4;
     return new Date(selectedWeek.setDate(fifthDay));
   };
+
   const getSixthDayOfWeek = () => {
     const sixthdDay = selectedWeek.getDate() - selectedWeek.getDay() + 5;
     return new Date(selectedWeek.setDate(sixthdDay));
@@ -60,7 +65,6 @@ const App = () => {
     value7: '',
   });
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues((Values) => ({ ...Values, [name]: value }));
@@ -68,8 +72,8 @@ const App = () => {
     if (e.target.value === "" || regex.test(e.target.value)) {
       setVal(e.target.value);
     }
-
   };
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     nav('/Main')
@@ -92,28 +96,28 @@ const App = () => {
       value6: '',
       value7: '',
     })
-    setTotal(sum);
-    setValues((prevValues) => ({ ...prevValues, sum: sum.toString() }));
-    // setValues(values.sum)
+    // setTotal(sum);
+    setValues((Values) => ({ ...Values, sum: sum.toString() }));
     // console.log(sum);
     // console.log(values);
 
-    setItems({ "hours": sum,"startdate":getFirstDayOfWeek().toLocaleDateString(), 
-     "lastdate":getLastDayOfWeek().toLocaleDateString() })
-    
-
+    setItems({
+      "hours": sum, "startdate": getFirstDayOfWeek().toLocaleDateString(),
+      "lastdate": getLastDayOfWeek().toLocaleDateString()
+    })
+    var temp1={
+      "hours": sum, "startdate": getFirstDayOfWeek().toLocaleDateString(),
+      "lastdate": getLastDayOfWeek().toLocaleDateString()
+    }
+console.log(temp1)
     let a = localStorage.getItem("items");
     if (a == null) {
       a = JSON.stringify([]);
     }
     let b = JSON.parse(a);
-    b.push(items);
+    b.push(temp1);
     localStorage.setItem("items", JSON.stringify(b))
   };
-  useEffect(()=>{
-    // setItems({ "hours": total,"startdate":getFirstDayOfWeek().toLocaleDateString(), 
-    // "lastdate":getLastDayOfWeek().toLocaleDateString() })
-  },[items,total])
 
   return (
     <>
@@ -137,9 +141,7 @@ const App = () => {
           handleSubmit={handleSubmit}
           items={items}
           setItems={setItems}
-    
         />} />
-
         <Route path='Main' element={<Main
           selectedWeek={selectedWeek}
           setSelectedWeek={setSelectedWeek}
@@ -157,17 +159,9 @@ const App = () => {
           setValues={setValues}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-
         />} />
       </Routes>
     </>
   )
-
 }
-
 export default App
-
-
-
-
-

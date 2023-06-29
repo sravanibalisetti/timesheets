@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
 function Main({
-    
+
     getFirstDayOfWeek,
     getSecondDayOfWeek,
     getThirdDayOfWeek,
@@ -172,8 +172,6 @@ function Main({
                         <div style={{ textAlign: "right" }}>
                             <Button variant="contained" style={{ backgroundColor: "#00aae7" }}
                                 onClick={handleSubmit} >
-
-
                                 submit
                             </Button>
                         </div>
